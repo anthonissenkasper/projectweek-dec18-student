@@ -7,7 +7,6 @@ export default class InvalidValueException extends Error {
   constructor(argument: string, value: any, condition: string) {
     let msg = `<${argument}> ${condition} | actual: ${value.toString()}`;
     super(msg);
-    console.error(value);
 
     this.argument = argument;
     this.value = value;
@@ -16,4 +15,5 @@ export default class InvalidValueException extends Error {
 
     this.name = 'InvalidValueException';
   }
+
 }

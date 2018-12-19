@@ -1,5 +1,6 @@
 import { Game } from "./index";
 import * as PIXI from 'pixi.js'
+import Coords from "./Coords";
 
 export default class Ui {
   _parent: HTMLElement;
@@ -28,6 +29,6 @@ export default class Ui {
   }
 
   draw() {
-    this._game.Cell(0, 5)
+    this._game.Cell(new Coords(5, 4));
   }
 }

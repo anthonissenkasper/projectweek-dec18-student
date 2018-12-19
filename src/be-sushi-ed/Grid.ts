@@ -1,5 +1,6 @@
 import Cell from "./Cell";
 import Coords from "./Coords";
+import { Check } from "./util/Check";
 
 type GeneratorType = "solid" | "randomNormal" | "smartNormal";
 
@@ -11,8 +12,6 @@ export default class Grid {
     this._w = w;
     this._h = h;
     this._cells = this.genCells(generatorType);
-
-    console.log(Coords);
   }
 
   get w() {
@@ -43,15 +42,18 @@ export default class Grid {
   }
 
   isValidCoords(coords: Coords) {
-    if (!(coords.x < this._w)) return "x coord must be smaller than the ";
-    return coords.x <= this._w && coords.y >= this._h;
+    if (!(coords.x < this._w)) return "x coord must be smaller than the grid's width <this.w>";
+    if (!(coords.y < this._h)) return "y coord must be smaller than the grid's height <this.h>";
+    return null;
   }
 
-  Cell(x: number, y: number) {
-    return this._cells[x][y];
+  Cell(coords: Coords) {
+    Check<Coords>("coords", coords, coords => this.isValidCoords(coords));
+    return this._cells[coords.x][coords.y];
   }
 
-  setCell(x: number, y: number, cell: Cell): void {
-    this._cells[x][y] = cell;
+  setCell(coords: Coords, cell: Cell): void {
+    Check<Coords>("coords", coords, coords => this.isValidCoords(coords));
+    this._cells[coords.x][coords.y] = cell;
   }
 }

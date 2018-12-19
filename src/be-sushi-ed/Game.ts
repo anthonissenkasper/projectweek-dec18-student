@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 
 import Grid from "./Grid"
+import Coords from './Coords';
 
 export default class Game {
   _grid: Grid;
@@ -19,8 +20,8 @@ export default class Game {
 
   }
 
-  Cell(x: number, y: number) {
-    return this._grid.Cell(x, y);
+  Cell(coords: Coords) {
+    return this._grid.Cell(coords);
   }
 
 
