@@ -28,6 +28,6 @@ export default class Ui {
   }
 
   draw() {
-
+    this._game.Cell(0, 5)
   }
 }
