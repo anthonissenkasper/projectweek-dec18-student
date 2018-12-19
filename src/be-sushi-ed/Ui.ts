@@ -25,4 +25,8 @@ export default class Ui {
     rectangle.y = 170;
     this._pa.stage.addChild(rectangle);
   }
+
+  draw() {
+    
+  }
 }

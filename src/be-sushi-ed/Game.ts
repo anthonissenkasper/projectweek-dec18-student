@@ -20,5 +20,9 @@ export default class Game {
 
   }
 
+  Cell(x: number, y: number) {
+    return this._grid.Cell(x, y);
+  }
+
 
 }

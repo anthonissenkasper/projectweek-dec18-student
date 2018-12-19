@@ -22,7 +22,8 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "foo": "echo %PATH%"
   },
   "keywords": [
     "ucll"
