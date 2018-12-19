@@ -28,13 +28,13 @@ export default class Grid {
       cells[x] = new Array(this._h);
       let col = cells[x];
       for (let y = 0; y < this._h; y++) {
-        col[y] = new Cell("flaming", 0);
+        col[y] = new Cell("normal", 0);
       }
     }
     return cells;
   }
 
   Cell(x: number, y: number) {
-
+    return this._cells[x][y];
   }
 }
