@@ -3,8 +3,19 @@
 
 module.exports = {
   "testMatch": [
-    "<rootDir>/tests/(.*)test.js"
-   ]
+    "<rootDir>/tests/**/(.*)-test.ts"
+   ],
+   "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 

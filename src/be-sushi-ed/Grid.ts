@@ -15,22 +15,12 @@ export default class Grid {
     console.log(Coords);
   }
 
-  genCells(generatorType: GeneratorType, fillCell?: Cell) {
-    let generator: () => Cell;
-    switch(generatorType) {
-      case "solid":
-      let cell = fillCell || new Cell("normal", 0);
-      generator = () => cell;
-      break;
-
-      case "randomNormal":
-      generator = () => new Cell("normal", Math.floor(Math.random() * (Cell.maxColor + 1)));
-      break;
-
-      case "smartNormal":
-      generator = () =>
-
-    }
+  genCells(generatorType: GeneratorType, fillCell: Cell = new Cell("normal", 0)) {
+    let generator: (x: Number, y: Number) => Cell = ({
+      "solid": () => fillCell,
+      "randomNormal": () => new Cell("normal", Math.floor(Math.random() * (Cell.maxColor + 1))),
+      "smartNormal": () => new Cell("normal", Math.floor(Math.random() * (Cell.maxColor + 1)))
+    }[generatorType]);
 
 
     let cells = new Array(this._w);
@@ -38,13 +28,13 @@ export default class Grid {
       cells[x] = new Array(this._h);
       let col = cells[x];
       for (let y = 0; y < this._h; y++) {
-        col[y] = new Cell("flaming", 0);
+        col[y] = new Cell("normal", 0);
       }
     }
     return cells;
   }
 
   Cell(x: number, y: number) {
-
+    return this._cells[x][y];
   }
 }
