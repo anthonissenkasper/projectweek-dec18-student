@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import * as PIXI from 'pixi.js'
 
 import Grid from "./Grid"
 

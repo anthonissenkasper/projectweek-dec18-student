@@ -21,6 +21,7 @@ function load() {
   loaderInfo.textContent = "Loading be-sushi-ed...";
   import("./be-sushi-ed/index").then(beSushiEd => {
     let game = new beSushiEd.Game();
+    let ui = new beSushiEd.Ui(document.body, game)
     game.init();
     // while (true) {
     //   game.draw();

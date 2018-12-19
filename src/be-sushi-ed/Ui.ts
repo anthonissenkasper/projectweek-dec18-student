@@ -1,4 +1,5 @@
 import { Game } from "./index";
+import * as PIXI from 'pixi.js'
 
 export default class Ui {
   _parent: HTMLElement;
@@ -27,6 +28,6 @@ export default class Ui {
   }
 
   draw() {
-    
+
   }
 }
