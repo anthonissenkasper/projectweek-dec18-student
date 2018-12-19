@@ -28,6 +28,7 @@ export default class Grid {
       break;
 
       case "smartNormal":
+      generator = () =>
 
     }
 
