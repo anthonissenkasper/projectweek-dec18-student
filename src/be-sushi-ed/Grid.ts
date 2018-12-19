@@ -37,4 +37,8 @@ export default class Grid {
   Cell(x: number, y: number) {
     return this._cells[x][y];
   }
+
+  setCell(x: number, y: number, cell: Cell): void {
+    this._cells[x][y] = cell;
+  }
 }
