@@ -15,6 +15,14 @@ export default class Grid {
     console.log(Coords);
   }
 
+  get w() {
+    return this._w;
+  }
+
+  get h() {
+    return this._h;
+  }
+
   genCells(generatorType: GeneratorType, fillCell: Cell = new Cell("normal", 0)) {
     let generator: (x: Number, y: Number) => Cell = ({
       "solid": () => fillCell,
@@ -32,6 +40,11 @@ export default class Grid {
       }
     }
     return cells;
+  }
+
+  isValidCoords(coords: Coords) {
+    if (!(coords.x < this._w)) return "x coord must be smaller than the ";
+    return coords.x <= this._w && coords.y >= this._h;
   }
 
   Cell(x: number, y: number) {
