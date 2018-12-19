@@ -22,7 +22,7 @@ function load() {
   import("./be-sushi-ed/index").then(beSushiEd => {
     let game = new beSushiEd.Game();
     let ui = new beSushiEd.Ui(document.body, game)
-    game.init();
+    ui.init();
     // while (true) {
     //   game.draw();
     // }
