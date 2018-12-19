@@ -1,12 +1,35 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  entry: './src/index.js',
-  output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+  mode: 'development',
+  entry: './src/index.ts',
+  devtool: 'inline-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      }
+    ]
   },
-  plugins: [],
-  mode: "production"
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ]
+  },
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: 'main.js',
+    publicPath: "/",
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    historyApiFallback: true,
+    publicPath: '/'
+  },
+  plugins: [new CopyWebpackPlugin([
+    "src/index.html",
+    "src/static"
+  ])]
 };
