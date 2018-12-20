@@ -1,17 +1,18 @@
-import Grid from "../../src/be-sushi-ed/Grid";
+import Grid, { Generators } from "../../src/be-sushi-ed/Grid";
 import Cell from "../../src/be-sushi-ed/Cell";
 import InvalidValueException from "../../src/be-sushi-ed/exceptions/InvalidValueException";
-import Coords from "../../src/be-sushi-ed/Coords";
+import { Coords } from "../../src/be-sushi-ed/Coords";
 
 let grid : Grid;
 
 beforeEach(() => {
-  grid = new Grid(8, 5, "solid", new Cell("normal", 0));
+  grid = new Grid(8, 5, Generators.smart);
 });
 
-test('Cell origin', () => {
-  let actual = grid.Cell(new Coords(0, 0));
-  let expected = new Cell("normal", 0);
+test('Cell()', () => {
+  let coords = new Coords(0, 0);
+  let actual = grid.Cell(coords);
+  let expected = grid.Cell(coords);
   expect(actual).toEqual(expected);
 });
 
@@ -19,7 +20,7 @@ test('Cell out of bounds left', () => {
   try {
     grid.Cell(new Coords(-5, 0));
   } catch (err) {
-    expect(err.name).toBe("InvalidValueException")
+    expect(err.name).toBe("InvalidValueException");
   }
 });
 
@@ -27,7 +28,7 @@ test('Cell out of bounds right', () => {
   try {
     grid.Cell(new Coords(10, 0));
   } catch (err) {
-    expect(err.name).toBe("InvalidValueException")
+    expect(err.name).toBe("InvalidValueException");
   }
 });
 
@@ -50,3 +51,4 @@ test('setCell middle', () => {
   let expected = cell;
   expect(actual).toEqual(expected);
 });
+

@@ -15,22 +15,27 @@ function removeLoaderError() {
   }
 }
 
+type Orientation = 0 | 1| 2 | 3;
+
 function load() {
   removeLoaderError();
 
   loaderInfo.textContent = "Loading be-sushi-ed...";
   import("./be-sushi-ed/index").then(beSushiEd => {
+    // let grid = new beSushiEd.Grid(5, 5, beSushiEd.Generators.smart);
+    // console.log(grid.gridAsString());
     let game = new beSushiEd.Game();
     let ui = new beSushiEd.Ui(document.body, game)
     ui.init();
+    ui.draw();
     // while (true) {
     //   game.draw();
     // }
 
     loaderInfo.classList.add("hidden");
   }).catch(err => {
-    console.error(err);
     gameError.textContent = err;
+    console.error(err);
   });
 }
 

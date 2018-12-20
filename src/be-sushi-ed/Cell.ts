@@ -34,4 +34,8 @@ export default class Cell {
   get color() {
     return this._color
   }
+
+  equals(other: Cell) {
+    return this.type === other.type && this.color === other.color;
+  }
 }

@@ -1,28 +1,28 @@
 import * as _ from 'lodash';
 
-import Grid from "./Grid"
-import Coords from './Coords';
+import Grid, { Generators } from "./Grid"
+import { Coords } from './Coords';
+
+const CELL_ICON_PATHS = [
+  ""
+]
 
 export default class Game {
   _grid: Grid;
 
   constructor() {
-    console.log(Grid);
-    this._grid = new Grid(5, 8, "smartNormal");
-    console.log(this._grid);
+    this._grid = new Grid(5, 8, Generators.smart);
   }
 
-  init() {
-
+  get h() {
+    return this._grid.h
   }
 
-  draw() {
-
+  get w() {
+    return this._grid.w
   }
 
   Cell(coords: Coords) {
     return this._grid.Cell(coords);
   }
-
-
 }
