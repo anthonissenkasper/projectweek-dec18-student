@@ -85,6 +85,71 @@ function verticalChainAt(grid, position)
     return result;
 }
 
-function removeChains(grid){
+function collapse(grid)
+{
+    //code werkt ni tegoei dus opgesplitst in 2: bovenste rij en middenste rijen:
 
+    //bovenste rij
+
+    for(let i = 0; i != width(grid)+1;  i ++){
+        if(grid[0][i] == "red" && grid[1][i] == "")
+        {
+            grid[0][i] = ""
+            grid[1][i] = "red"
+        }
+        if(grid[0][i] == "blue" && grid[1][i] == "")
+        {
+            grid[0][i] = ""
+            grid[1][i] = "blue"
+        }
+        if(grid[0][i] == "green" && grid[1][i] == "")
+        {
+            grid[0][i] = ""
+            grid[1][i] = "green"
+        }
+    }
+
+
+    //middenste rijen
+
+    for(let j = height(grid)-1; j !== 0;  j --){
+        for(let i = 0; i != width(grid)+1;  i ++){
+
+            if(grid[j][i] == "" && grid[j-1][i] == "red")
+            {
+                grid[j-1][i] = ""
+                grid[j][i] = "red"
+            }
+            else if(grid[j][i] == "" && grid[j-1][i] == "green")
+            {
+                grid[j-1][i] = ""
+                grid[j][i] = "green"
+            }
+            else if(grid[j][i] == "" && grid[j-1][i] == "blue")
+            {
+                grid[j-1][i] = ""
+                grid[j][i] = "blue"
+            }
+        }
+    }
+
+    //onderste rij
+    for(let i = 0; i != width(grid);  i ++)
+    {
+        if(grid[height(grid)-2][i] == "red" && grid[height(grid)-1][i] == "")
+        {
+            grid[height(grid)-2][i] = ""
+            grid[height(grid)-1][i] = "red"
+        }
+        if(grid[0][i] == "blue" && grid[1][i] == "")
+        {
+            grid[height(grid)-2][i] = ""
+            grid[height(grid)-1][i] = "blue"
+        }
+        if(grid[0][i] == "green" && grid[1][i] == "")
+        {
+            grid[height(grid)-2][i] = ""
+            grid[height(grid)-1][i] = "green"
+        }
+    }
 }
