@@ -21,7 +21,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: 'main.js',
-    publicPath: "/",
+    publicPath: "/project1/",
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -31,6 +31,6 @@ module.exports = {
   },
   plugins: [new CopyWebpackPlugin([
     "src/index.html",
-    "src/static"
+    { from: 'src/static/**/*', to: '', transformPath: (targetPath, sourcePath) => targetPath.replace("src", "")},
   ])]
 };

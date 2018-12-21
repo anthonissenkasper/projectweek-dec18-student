@@ -1,12 +1,3 @@
-
-let loaderInfo = document.createElement("span")
-loaderInfo.classList.add("loader-info");
-let gameError = document.createElement("span");
-gameError.classList.add("game-error");
-
-document.body.prepend(gameError);
-document.body.prepend(loaderInfo);
-
 function removeLoaderError() {
   let loaderInitError = document.querySelector("#loader-init-error");
   if (loaderInitError !== null) {
@@ -15,28 +6,33 @@ function removeLoaderError() {
   }
 }
 
-type Orientation = 0 | 1| 2 | 3;
+function handleGameError(err: Error) {
+  let eGameError = document.querySelector("#game-error");
+  if (eGameError !== null) {
+    eGameError.textContent = String(err);
+    console.error(err);
+  }
+}
+
+function startGame(beSushiEd: any) {
+  let game = new beSushiEd.Game();
+  let ui = new beSushiEd.Ui(document.body, game)
+  ui.init();
+  ui.draw();
+}
 
 function load() {
   removeLoaderError();
 
-  loaderInfo.textContent = "Loading be-sushi-ed...";
-  import("./be-sushi-ed/index").then(beSushiEd => {
-    // let grid = new beSushiEd.Grid(5, 5, beSushiEd.Generators.smart);
-    // console.log(grid.gridAsString());
-    let game = new beSushiEd.Game();
-    let ui = new beSushiEd.Ui(document.body, game)
-    ui.init();
-    ui.draw();
-    // while (true) {
-    //   game.draw();
-    // }
-
-    loaderInfo.classList.add("hidden");
-  }).catch(err => {
-    gameError.textContent = err;
-    console.error(err);
-  });
+  let eLoaderInfo = document.querySelector("#loader-info")!;
+  
+  if (eLoaderInfo !== null) {
+    eLoaderInfo.textContent = "Loading be-sushi-ed...";
+    import("./be-sushi-ed/index").then(beSushiEd => {
+      startGame(beSushiEd);
+      eLoaderInfo.classList.add("hidden");
+    }).catch(handleGameError);
+  }
 }
 
 window.addEventListener("load", _ => {

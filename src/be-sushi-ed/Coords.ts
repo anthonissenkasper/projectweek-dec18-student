@@ -1,7 +1,8 @@
 import { Check } from "./util/Check";
 import { invNZ, TAU } from "./util/Math";
 
-type Orientation = 0 | 1 | 2 | 3;
+export type Orientation = 0 | 1 | 2 | 3;
+const orientations: Array<Orientation> = [0, 1, 2, 3];
 type Nn = {
   orientation: Orientation,
   coords: Coords
@@ -34,6 +35,15 @@ export class Coords {
     let x = invNZ(Math.round(Math.cos((TAU / 4) * (orientation % 4))));
     let y = invNZ(Math.round(Math.sin((TAU / 4) * (orientation % 4))));
     return this.movedBy(new Coords(x, y));
+  }
+
+  orientationByNeighbour(neighbour: Coords) {
+    for (const orientation of orientations) {
+      let toTest = this.neighbour(orientation)
+      if (toTest.equals(neighbour))
+        return orientation;
+    }
+    return null;
   }
 
   // // list of all the neighbour's neighbours

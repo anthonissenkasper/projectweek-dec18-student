@@ -1,0 +1,95 @@
+{"frames": {
+
+"Sushi1orange.1.png":
+{
+	"frame": {"x":0,"y":0,"w":658,"h":500},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":658,"h":500},
+	"sourceSize": {"w":658,"h":500},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"Sushi1red.1.png":
+{
+	"frame": {"x":658,"y":0,"w":658,"h":500},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":658,"h":500},
+	"sourceSize": {"w":658,"h":500},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"sushi1yellow.1.png":
+{
+	"frame": {"x":1316,"y":0,"w":658,"h":500},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":658,"h":500},
+	"sourceSize": {"w":658,"h":500},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"sushi2orange.1.png":
+{
+	"frame": {"x":0,"y":500,"w":479,"h":400},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":400},
+	"sourceSize": {"w":479,"h":400},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"sushi2red.1.png":
+{
+	"frame": {"x":479,"y":500,"w":479,"h":400},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":400},
+	"sourceSize": {"w":479,"h":400},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"sushi2yellow.1.png":
+{
+	"frame": {"x":958,"y":500,"w":479,"h":400},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":400},
+	"sourceSize": {"w":479,"h":400},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"sushi3orange.1.png":
+{
+	"frame": {"x":1437,"y":500,"w":522,"h":430},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":522,"h":430},
+	"sourceSize": {"w":522,"h":430},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"sushi3red.1.png":
+{
+	"frame": {"x":0,"y":930,"w":522,"h":430},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":522,"h":430},
+	"sourceSize": {"w":522,"h":430},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"Sushi3yellow.1.png":
+{
+	"frame": {"x":522,"y":930,"w":522,"h":430},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":522,"h":430},
+	"sourceSize": {"w":522,"h":430},
+	"anchor": {"x":0.5,"y":0.5}
+}},
+"animations": {
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "sushi-icons.png",
+	"format": "RGBA8888",
+	"size": {"w":1974,"h":1360},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e24ab473d3bc5ce4a33f06fde428f082:f976caf134963f4587c998524e46ade4:cff0e1047e9e502bc65ede836a107660$"
+}
+}

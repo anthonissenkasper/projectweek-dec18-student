@@ -1,7 +1,7 @@
 import Cell from "./Cell";
 import { Coords, C } from "./Coords";
 import { Check } from "./util/Check";
-import {range} from "lodash";
+import {range, cloneDeep} from "lodash";
 import InvalidValueException from "./exceptions/InvalidValueException";
 
 type Generator = (coords: Coords, grid: Grid, generatorPrefs?: GeneratorPrefs) => Cell;
@@ -37,22 +37,23 @@ export class Generators {
     // Choose color to match target possible moves
     // calc n/o possible moves
     let noPossibleMoves = legalCells.map((cell) => grid.getPossibleMoveOrientations(coords, cell).length);
-    let bestOp: (...values: number[]) => number;
 
-    if (generatorPrefs.possibleMovesTargetDelta === undefined || generatorPrefs.possibleMovesTargetDelta > 0) {
-      bestOp = Math.max;
-    } else {
-      bestOp = Math.min;
+    let targetMoves = generatorPrefs.possibleMovesTargetDelta === undefined ? 0 : generatorPrefs.possibleMovesTargetDelta;
+    let preferredNoPossibleMoves = (targetMoves >= 0) ? Math.max(...noPossibleMoves) : Math.min(...noPossibleMoves);
+    let preferredCells: Array<Cell> = [];
+    for (let i = 0; i < legalCells.length; i++) {
+      if (noPossibleMoves[i] === preferredNoPossibleMoves)
+        preferredCells.push(legalCells[i]);
     }
-    let bestLegalCellsIndex = noPossibleMoves.indexOf(bestOp(...noPossibleMoves));
 
-    return legalCells[bestLegalCellsIndex];
+    let randomIndex = Math.floor(Math.random() * preferredCells.length);
+    return preferredCells[randomIndex];
   }
 }
 
 export default class Grid {
   _w: number; _h: number;
-  _cells: Array<Array<Cell>>
+  _cells: Array<Array<Cell | null>>
 
   constructor(w: number, h: number, generator: Generator = Generators.solid, generatorPrefs?: GeneratorPrefs) {
     this._w = w;
@@ -73,7 +74,7 @@ export default class Grid {
   }
 
   generate(generator: Generator, generatorPrefs: GeneratorPrefs = {fillCell: new Cell("normal", 0), possibleMovesTargetDelta: 0}) {
-    let movesTarget = 0;
+    let movesTarget = 20;
     let currentNoMoves = 0;
     for (let y = 0; y < this.h; y++) {
       let row = this._cells[y];
@@ -87,25 +88,34 @@ export default class Grid {
     }
   }
 
-  horizontalGroupSize(coords: Coords, cell: Cell | null = this.rawCell(coords)) {
-    return this.groupSizeByOrientation(coords, 0, cell) + 1 + this.groupSizeByOrientation(coords, 2, cell);
+  horizontalGroup(coords: Coords, cell: Cell | null = this.rawCell(coords)) {
+    let group: Array<Coords> = new Array();
+    group.push(...this.groupByOrientation(coords, 0, cell));
+    group.push(coords);
+    group.push(...this.groupByOrientation(coords, 2, cell))
+    return group;
   }
 
-  verticalGroupSize(coords: Coords, cell: Cell | null = this.rawCell(coords)) {
-    return this.groupSizeByOrientation(coords, 1, cell) + 1 + this.groupSizeByOrientation(coords, 3, cell);
+  verticalGroup(coords: Coords, cell: Cell | null = this.rawCell(coords)) {
+    let group: Array<Coords> = new Array();
+    group.push(...this.groupByOrientation(coords, 1, cell));
+    group.push(coords);
+    group.push(...this.groupByOrientation(coords, 3, cell))
+    return group;
   }
 
   totalScore(coords: Coords, cell: Cell | null = this.rawCell(coords)) {
     let score = 0;
-    let hScore = this.horizontalGroupSize(coords, cell) - 2;
-    let vScore = this.verticalGroupSize(coords, cell) - 2;
+    let hScore = this.horizontalGroup(coords, cell).length - 2;
+    let vScore = this.verticalGroup(coords, cell).length - 2;
     score += hScore > 0 ? hScore : 0;
     score += vScore > 0 ? vScore : 0;
     return score;
   }
 
   isLegalMove(coords: Coords, orienation: Orientation, cell: Cell | null = this.rawCell(coords)) {
-    return (this.totalScore(coords.neighbour(orienation), cell) > 0);
+    let neighbour = coords.neighbour(orienation);
+    return (this.totalScore(neighbour, cell) > 0);
   }
 
   // Returns the orientations for which a move is possible
@@ -119,19 +129,19 @@ export default class Grid {
     return possibleMoves;
   }
 
-  groupSizeByOrientation(coords: Coords, orienation: Orientation, cell: Cell | null = this.Cell(coords)) {
-    let score = 0;
+  groupByOrientation(coords: Coords, orienation: Orientation, cell: Cell | null = this.Cell(coords)) {
     let toCheckCoords = coords.neighbour(orienation);
     let toCheck = this.rawCell(toCheckCoords);
+    let group: Array<Coords> = new Array();
 
     while (toCheck !== null && cell !== null && cell.equals(toCheck)) {
+      group.push(toCheckCoords);
+
       toCheckCoords = toCheckCoords.neighbour(orienation);
       toCheck = this.rawCell(toCheckCoords);
-
-      score++;
     }
 
-    return score;
+    return group;
   }
 
   isValidCoords(coords: Coords) {
@@ -159,7 +169,7 @@ export default class Grid {
       return this._cells[coords.y][coords.x] || null;
   }
 
-  setCell(coords: Coords, cell: Cell): void {
+  setCell(coords: Coords, cell: Cell | null): void {
     Check<Coords>("coords", coords, coords => this.isValidCoords(coords));
     this._cells[coords.y][coords.x] = cell;
   }
@@ -171,20 +181,27 @@ export default class Grid {
   }
 
   swap(coords: Coords, orienation: Orientation) {
-    if (this.isLegalMove(coords, orienation)) {
-      console.log("legal");
-    }
+    let coordsA = coords;
+    let coordsB = coords.neighbour(orienation);
+    let a = this.Cell(coordsA);
+    let b = this.Cell(coordsB);
+    this.setCell(coordsA, b);
+    this.setCell(coordsB, a);
   }
 
   gridAsString() {
     let str = '';
     for (const coll of this._cells) {
       for (const cell of coll) {
-        str += cell.color;
+        str += cell === null ? ' ' : cell.color;
         str += ' ';
       }
       str += '\n';
     }
     return str;
+  }
+
+  clone() {
+    return cloneDeep(this);
   }
 }
